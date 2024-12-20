@@ -8,6 +8,7 @@ using Hashtable = ExitGames.Client.Photon.Hashtable;
 using Newtonsoft.Json;
 using Photon.Pun;
 using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 
 [RequireComponent(typeof(PhotonView))]
@@ -19,7 +20,7 @@ public partial class EnemySpawnerPhotonSync : MonoBehaviourPunCallbacks, IPunObs
     /// this data is exposed to public/RoomProperty
     /// </summary>
     [Header("Debug")][SerializeField] private EnemySpawnerData debugEnemySpawnerData;
-
+    
     /// <summary>
     /// these data donot have to expose to public/RoomProperty
     /// but everyone have to keep a latest copy of these
@@ -36,6 +37,42 @@ public partial class EnemySpawnerPhotonSync : MonoBehaviourPunCallbacks, IPunObs
     
     private Dictionary<int, EnemySpawnedBotData> generatedBots = new();
     
+#if UNITY_EDITOR
+    [Header("Debug EnemySpawnedBotData Sync")]
+    [Space]
+    public EnemySpawnedBotData debugEnemySpawnedBotData;
+
+    [ContextMenu("Debug Insert EnemySpawnedBotData")]
+    public void DebugInsertEnemySpawnedBotData()
+    {
+        WriteIntoGeneratedBots(new List<EnemySpawnedBotData>(){debugEnemySpawnedBotData });
+    }
+    
+    [ContextMenu("Debug Insert EnemySpawnedBotData CleanThenInsert")]
+    public void DebugInsertEnemySpawnedBotDataCleanInsert()
+    {
+        WriteIntoGeneratedBots(new List<EnemySpawnedBotData>(){debugEnemySpawnedBotData });
+    }
+    
+    public TMP_Text tmpText;
+    [ContextMenu("Debug Print EnemySpawnedBotData To TMP")]
+    public void DebugPrintEnemyData()
+    {
+        int[] botIds;
+        int[] botHps;
+        Vector3[] botPositions;
+        Quaternion[] botRotations;
+        Vector3[] botScales;
+        string[] targetIds;
+        ReadFromGeneratedBots(out botIds, out botHps, out botPositions, out botRotations, out botScales, out targetIds);
+        tmpText.text = "botIds:"+string.Join(", ", botIds);
+        tmpText.text += "\nbotHps:"+string.Join(", ", botHps);
+        tmpText.text += "\nbotPositions:"+string.Join(", ", botPositions.Select(pos => pos.ToString()).ToArray());
+        tmpText.text += "\nbotRotations:"+string.Join(", ", botRotations.Select(pos => pos.ToString()).ToArray());
+        tmpText.text += "\nbotScales:"+string.Join(", ", botScales.Select(pos => pos.ToString()).ToArray());
+        tmpText.text += "\ntargetIds:"+string.Join(", ", targetIds);
+    }
+#endif
     /// <summary>
     /// Reads data from the generated bots dictionary and outputs arrays for each property.
     /// </summary>

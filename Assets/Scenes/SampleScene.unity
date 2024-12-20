@@ -581,9 +581,7 @@ MonoBehaviour:
     botRotation: {x: 0, y: 0, z: 0, w: 0}
     botScale: {x: 0, y: 0, z: 0}
     targetId: 
-  debugEnemyID: 0
-  debugPanel: {fileID: 240080108}
-  nextBotIDName: bot_spw_id
+  tmpText: {fileID: 240080108}
 --- !u!114 &1608939875
 MonoBehaviour:
   m_ObjectHideFlags: 0

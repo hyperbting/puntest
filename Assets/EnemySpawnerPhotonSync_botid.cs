@@ -73,24 +73,24 @@ public partial class EnemySpawnerPhotonSync
     #endregion
 
 
-    private void FixedUpdate()
-    {
-        if (!PhotonNetwork.InRoom || !PhotonNetwork.IsMasterClient)
-            return;
-
-        // StartCoroutine(UniqueRoomPropertyHelper.SetUniqueRoomPropertyCASCoroutine(BotIDName,2,1, () => { Debug.LogFormat("success");}, () => { Debug.Log("Failed");}));
-        var res =  StartCoroutine(GetNextIDAndIncrementCoroutine((success, res) =>
-        {
-            if (!success)
-            {
-                Debug.Log("Failed to get next ID. Make sure the conditions are met.");
-            }
-            else
-            {
-                Debug.LogFormat("ID obtained: {0} and incrementing", res);
-            }
-        }));
-    }
+    // private void FixedUpdate()
+    // {
+    //     if (!PhotonNetwork.InRoom || !PhotonNetwork.IsMasterClient)
+    //         return;
+    //
+    //     // StartCoroutine(UniqueRoomPropertyHelper.SetUniqueRoomPropertyCASCoroutine(BotIDName,2,1, () => { Debug.LogFormat("success");}, () => { Debug.Log("Failed");}));
+    //     var res =  StartCoroutine(GetNextIDAndIncrementCoroutine((success, res) =>
+    //     {
+    //         if (!success)
+    //         {
+    //             Debug.Log("Failed to get next ID. Make sure the conditions are met.");
+    //         }
+    //         else
+    //         {
+    //             Debug.LogFormat("ID obtained: {0} and incrementing", res);
+    //         }
+    //     }));
+    // }
 #if UNITY_EDITOR
     [ContextMenu("Debug GetNextIDAndIncrementCoroutine")]
     public void GetNextIDAndIncrementCoroutine()
